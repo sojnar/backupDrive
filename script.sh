@@ -4,7 +4,7 @@ read -p "Digite o seu login do google sem o @gmail.com: " login
 stty -echo
 read -p "Difige sua senha do email google: " password
 stty echo
-tste
+
 installGdrive(){
   link64="https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download"
   link32="https://docs.google.com/uc?id=0B3X9GlR6EmbnLV92dHBpTkFhTEU&export=download"
@@ -14,7 +14,7 @@ installGdrive(){
     wget $link64 -O /bin/gdrive
   else
     wget $link32 -O /bin/gdrive
-  fi  
+  fi
 }
 
 sendMail(){
@@ -120,4 +120,9 @@ configMutt(){
     color body  brightblue black (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
   " > ~/.muttrc
 }
+
+startBackupMysql(){
+
+}
+
 configMutt
