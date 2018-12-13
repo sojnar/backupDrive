@@ -12,8 +12,10 @@ installGdrive(){
   if [ $arch -eq x86_64 ]
   then
     wget $link64 -O /bin/gdrive
+    chmod +x /bin/gdrive
   else
     wget $link32 -O /bin/gdrive
+    chmod +x /bin/gdrive
   fi
 }
 
@@ -50,6 +52,8 @@ installMutt(){
 }
 
 allowToken(){
+  echo -n "Para a syncronização com o GoogleDrive é necessário a ativação\
+  do token abaixot!"
   echo "https://accounts.google.com/o/oauth2/auth?access_type=offline&client_\
   id=367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com\
   &redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=\
