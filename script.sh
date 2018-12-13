@@ -19,11 +19,11 @@ installGdrive(){
 
 sendMail(){
   read -p "Deseja configurar e-mail para envio do status do backup (s|n)" resp
-  if [ $resp -eq s ] || [ $resp -eq S ]
+  if [ $resp == s ] || [ $resp == S ]
   then
     read -p "Digite o e-mail para recebimento: " mail
     installGdrive
-  elif [ $resp -eq n ] || [ $resp -eq N ]
+  elif [ $resp == n ] || [ $resp == N ]
   then
     installMutt
   else
@@ -35,13 +35,13 @@ sendMail(){
 installMutt(){
   versionUbuntu=$(cat /proc/version | grep -i ubuntu > /dev/null ; echo $?)
   versionCentos=$(cat /proc/version | grep -i 'red hat' > /dev/null ; echo $?)
-  if [ '$versionUbuntu' -eq '0' ]
+  if [ $versionUbuntu -eq 0 ]
   then
     apt -f install -y
     apt install mutt -y
     apt update -y
     sendMail
-  elif [ '$versionCentos' -eq '0' ]
+  elif [ $versionCentos -eq 0 ]
   then
     yum install mutt -y
     yum update -y
@@ -124,9 +124,9 @@ configMutt(){
   " > ~/.muttrc
 }
 
-startBackupMysql(){
+#startBackupMysql(){
 
-}
+#}
 
 installMutt
 configMutt
