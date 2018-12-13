@@ -11,11 +11,11 @@ installMutt(){
   if [ '$versionUbuntu' -eq '0' ]
   then
     apt -f install -y
-    apt install lsb-release -y
+    apt install mutt -y
     apt update -y
   elif [ '$versionCentos' -eq '0' ]
   then
-    yum install lsb -y
+    yum install mutt -y
     yum update -y
   fi
 }
