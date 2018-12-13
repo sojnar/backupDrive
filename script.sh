@@ -5,6 +5,28 @@ stty -echo
 read -p "Difige sua senha do email google: " password
 stty echo
 
+installMutt(){
+  versionUbuntu=$(cat /proc/version | grep -i ubuntu > /dev/null ; echo $?)
+  versionCentos=$(cat /proc/version | grep -i 'red hat' > /dev/null ; echo $?)
+  if [ '$versionUbuntu' -eq '0' ]
+  then
+    apt -f install -y
+    apt install lsb-release -y
+    apt update -y
+  elif [ '$versionCentos' -eq '0' ]
+  then
+    yum install lsb -y
+    yum update -y
+  fi
+}
+
+allowToken(){
+  echo "https://accounts.google.com/o/oauth2/auth?access_type=offline&client_\
+  id=367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com\
+  &redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=\
+  https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&state=state" > linkemail
+}
+
 configMutt(){
   echo "
     # Conta Gmail.
