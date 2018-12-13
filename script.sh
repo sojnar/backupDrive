@@ -4,6 +4,32 @@ read -p "Digite o seu login do google sem o @gmail.com: " login
 stty -echo
 read -p "Difige sua senha do email google: " password
 stty echo
+tste
+installGdrive(){
+  link64="https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download"
+  link32="https://docs.google.com/uc?id=0B3X9GlR6EmbnLV92dHBpTkFhTEU&export=download"
+  arch=$(uname -m)
+  if [ $arch -eq x86_64 ]
+  then
+    wget $link64 -O /bin/gdrive
+  else
+    wget $link32 -O /bin/gdrive
+  fi  
+}
+
+sendMail(){
+  read -p "Deseja configurar e-mail para envio do status do backup (s|n)" resp
+  if [ $resp -eq s ] || [ $resp -eq S ]
+  then
+    read -p "Digite o e-mail para recebimento: " mail
+  elif [ $resp -eq n ] || [ $resp -eq N ]
+  then
+    installMutt
+  else
+    echo "Opção escolhida invalida!"
+    sendMail
+  fi
+}
 
 installMutt(){
   versionUbuntu=$(cat /proc/version | grep -i ubuntu > /dev/null ; echo $?)
