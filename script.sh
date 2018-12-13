@@ -22,12 +22,13 @@ sendMail(){
   if [ $resp -eq s ] || [ $resp -eq S ]
   then
     read -p "Digite o e-mail para recebimento: " mail
+    installGdrive
   elif [ $resp -eq n ] || [ $resp -eq N ]
   then
     installMutt
   else
     echo "Opção escolhida invalida!"
-    sendMail
+    installGdrive
   fi
 }
 
@@ -39,10 +40,12 @@ installMutt(){
     apt -f install -y
     apt install mutt -y
     apt update -y
+    sendMail
   elif [ '$versionCentos' -eq '0' ]
   then
     yum install mutt -y
     yum update -y
+    sendMail
   fi
 }
 
@@ -125,4 +128,5 @@ startBackupMysql(){
 
 }
 
+installMutt
 configMutt
