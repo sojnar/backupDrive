@@ -1,21 +1,29 @@
 #!/bin/bash
 
+log="/var/log/savedump.log"
+
 installGdrive(){
+  clear
   link64="https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download"
   link32="https://docs.google.com/uc?id=0B3X9GlR6EmbnLV92dHBpTkFhTEU&export=download"
   arch=$(uname -m)
-  if [ $arch -eq x86_64 ]
+  if [ $arch == x86_64 ]
   then
-    wget $link64 -O /bin/gdrive
+    wget $link64 -O /bin/gdrive >> $log
+    echo "Instalando Gdrive!"
+    sleep 2
     chmod +x /bin/gdrive
   else
-    wget $link32 -O /bin/gdrive
+    wget $link32 -O /bin/gdrive >> $log
+    echo "Instalando Gdrive!"
+    sleep 2
     chmod +x /bin/gdrive
   fi
 }
 
 sendMail(){
   echo
+  clear
   read -p "Deseja configurar e-mail para envio do status do backup (s|n): " resp
   if [ $resp == s ] || [ $resp == S ]
   then
@@ -34,27 +42,30 @@ sendMail(){
 }
 
 installMutt(){
+  clear
   versionUbuntu=$(cat /proc/version | grep -i ubuntu > /dev/null ; echo $?)
   versionCentos=$(cat /proc/version | grep -i 'red hat' > /dev/null ; echo $?)
   if [ $versionUbuntu -eq 0 ]
   then
-    apt -f install -y
-    apt install mutt -y
-    apt update -y
+    apt -f install -y >> $log
+    apt install mutt -y >> $log
+    apt update -y >> $log
   elif [ $versionCentos -eq 0 ]
   then
-    yum install mutt -y
-    yum update -y
+    yum install mutt -y >> $log
+    yum update -y >> $log
   fi
 }
 
 allowToken(){
+  clear
   echo -n "Para a syncronização com o GoogleDrive é necessário a ativação\
   do token abaixo!"
-  echo "https://accounts.google.com/o/oauth2/auth?access_type=offline&client_\
-  id=367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com\
-  &redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=\
-  https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&state=state" > linkemail
+  echo
+  linkemail=`echo "https://accounts.google.com/o/oauth2/auth?access_type=offline&client_\
+id=367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com\
+&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=\
+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&state=state"`
   echo -n "Verifique o email de confirmação enviado para $login@gmail"
   avaliableToken
   echo -n
@@ -89,10 +100,12 @@ configMutt(){
   allowToken
 }
 
-
+avaliableToken(){
+  echo "$linkemail" | mutt -s 'Validação token' $login@gmail.com
+}
 
 tokenGdrive(){
-  gdrive list 
+  gdrive list
 }
 
 #startBackupMysql(){
@@ -101,7 +114,7 @@ tokenGdrive(){
 
 authRoot(){
   auth=$(whoami)
-  if [ $auth -lt root ]
+  if [ $auth != root ]
   then
     echo "Esse programa deve ser executado como root!"
   else
