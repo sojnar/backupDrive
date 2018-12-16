@@ -53,7 +53,7 @@ installMutt(){
 
 allowToken(){
   echo -n "Para a syncronização com o GoogleDrive é necessário a ativação\
-  do token abaixot!"
+  do token abaixo!"
   echo "https://accounts.google.com/o/oauth2/auth?access_type=offline&client_\
   id=367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com\
   &redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=\
